@@ -1,6 +1,8 @@
 package com.northcoders.recordshopapp.repository;
 
 import android.app.Application;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -37,5 +39,29 @@ public class RecordShopRepository {
         });
 
         return mutableLiveData;
+
+        }
+
+    public void addNewRecord(Record record) {
+        RecordShopApiService apiService = RetrofitInstance.getService();
+
+        Call<Record> call =  apiService.addRecord(record);
+
+        call.enqueue(new Callback<Record>() {
+            @Override
+            public void onResponse(Call<Record> call, Response<Record> response) {
+                Toast.makeText(application.getApplicationContext(),
+                        "Record added to database",
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Record> call, Throwable t) {
+                Toast.makeText(application.getApplicationContext(),
+                        "Unable to add record to database",
+                        Toast.LENGTH_SHORT).show();
+                Log.e("POST request failed", t.getMessage());
+            }
+        });
     }
 }
