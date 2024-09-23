@@ -25,6 +25,10 @@ public class MainActivityViewModel extends AndroidViewModel {
         return recordShopRepository.getMutableLiveData();
     }
 
+    public void addRecord(Record record) {
+        recordShopRepository.addNewRecord(record);
+    }
+
 
 
 }
